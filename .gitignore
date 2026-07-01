@@ -31,7 +31,6 @@ env/
 ehthumbs.db
 Thumbs.db
 
-# Challenge Specific / Outputs (Optional - uncomment if you don't want to track outputs)
-# detailed_results.json
-# submission.csv
-# \[PUB\]\ India_runs_data_and_ai_challenge/
+
+# Large data files (not for version control)
+candidates.jsonl
