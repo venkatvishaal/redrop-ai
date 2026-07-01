@@ -6,7 +6,7 @@ primary_contact:
   phone: "+91-8608870926"
 
 
-github_repo: "https://github.com/YOUR_USERNAME/redrop-ai"
+github_repo: "https://github.com/venkatvishaal/redrop-ai"
 
 sandbox_link: "https://huggingface.co/spaces/YOUR_USERNAME/redrop-ai"
 
@@ -32,7 +32,7 @@ ai_usage_summary: |
   All scoring is deterministic and runs offline on CPU.
 
 methodology_summary: |
-  V6 deterministic two-stage multi-signal ranking engine with 5 scoring dimensions.
+  The system is a  deterministic two-stage multi-signal ranking engine with 5 scoring dimensions.
   Stage 1: Pool-stable TF-IDF cosine similarity between candidate full-text
   (headline + summary + career history + education) and JD embedding
   text (semantic_fit weight: 12%).
@@ -58,7 +58,7 @@ methodology_summary: |
   anti-disqualify, framework-enthusiast flag, sanity checks,
   honeypot detection). 24,908 candidates hard-excluded.
 
-  V6 adds an O(1000) evidence-consensus reranker, fairness invariance tests,
+  System adds an O(1000) evidence-consensus reranker, fairness invariance tests,
   controlled ablations, recruiter-feedback capture and labeled calibration tooling.
 
 
