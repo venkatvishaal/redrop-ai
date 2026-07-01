@@ -40,6 +40,7 @@ class SanitySignals:
     has_expert_zero_duration: bool = False
     signup_after_active: bool = False
     education_timeline_implausible: bool = False
+    unsupported_metadata_skills: List[str] = field(default_factory=list)
     sanity_penalty_multiplier: float = 1.0
 
 
@@ -103,11 +104,32 @@ def score_sanity(c: Candidate) -> SanitySignals:
                 )
                 penalty *= 0.5
 
+    # 5. Metadata vs Experience consistency
+    # Compare skills in metadata (skills array & assessments) vs career text
+    career_text_lower = " ".join(ch.description for ch in c.career_history).lower()
+    
+    metadata_skills = {s.name.lower() for s in c.skills}
+    assessments = c.redrob_signals.get("skill_assessment_scores", {})
+    if isinstance(assessments, dict):
+        metadata_skills.update(k.lower() for k in assessments.keys())
+        
+    unsupported_skills = []
+    if career_text_lower:  # only check if they provided some text
+        for skill in metadata_skills:
+            if skill not in career_text_lower:
+                unsupported_skills.append(skill)
+                
+        # If they claim many skills but don't mention a large portion in text
+        if len(metadata_skills) >= 5 and len(unsupported_skills) / len(metadata_skills) > 0.7:
+            issues.append(f"High metadata/experience mismatch: claimed {len(metadata_skills)} skills, but {len(unsupported_skills)} unsupported by experience text.")
+            penalty *= 0.8
+
     return SanitySignals(
         issues=issues,
         tenure_mismatch_years=round(mismatch, 2),
         has_expert_zero_duration=has_expert_zero,
         signup_after_active=signup_after_active,
         education_timeline_implausible=education_implausible,
+        unsupported_metadata_skills=unsupported_skills,
         sanity_penalty_multiplier=round(penalty, 3),
     )
