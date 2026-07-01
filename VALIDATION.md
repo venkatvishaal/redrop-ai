@@ -1,4 +1,4 @@
-# V8 Validation
+# Sysetm Validation
 
 - Full pipeline: 70+ automated tests across all 15+ modules
 - Semantic backend: sentence-transformers (default) with TF-IDF fallback
@@ -12,7 +12,7 @@
 - Code quality: evaluate.py and feedback.py rewritten for readability
 - Fairness: tier/grade have zero weight; verified by counterfactual test
 
-## What V8 cannot claim (honest limits)
+## What system cannot claim (honest limits)
 
 - **Accuracy**: Unvalidated without recruiter-provided relevance labels
 - **Cross-job calibration**: Each JD produces a different profile; weights may need re-calibration per job
