@@ -17,7 +17,7 @@ import gradio as gr
 def run_ranking():
     try:
         result = subprocess.run(
-            ["python", "rank.py", "--candidates", "data/jobs.json", "--out", "submission.csv"],
+            ["python", "rank.py", "--candidates", "data/sample_candidates.jsonl", "--out", "submission.csv"],
             capture_output=True,
             text=True,
             timeout=300
