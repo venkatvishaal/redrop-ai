@@ -7,4 +7,5 @@ pandas==2.2.3
 gradio>=5.0.0
 plotly==5.24.1
 jsonschema==4.23.0
+pydantic<2.8.0
 python-dotenv==1.0.1
