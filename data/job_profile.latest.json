@@ -1,0 +1,143 @@
+{
+  "_comment": "Compiled representation of job_description.md for Senior AI Engineer - Founding Team @ Redrob AI. This is hand-authored from a careful reading of the JD, not auto-extracted, because the JD explicitly rewards reasoning about gap between what it says and what it means.",
+
+  "role_title": "Senior AI Engineer - Founding Team",
+  "company": "Redrob AI",
+
+  "jd_text_for_embedding": "Senior AI Engineer Founding Team Redrob AI talent intelligence platform. Own the intelligence layer: ranking, retrieval, and matching systems that decide what recruiters see when they search for candidates. Production experience with embeddings-based retrieval systems (sentence-transformers, OpenAI embeddings, BGE, E5) deployed to real users, handling embedding drift, index refresh, retrieval-quality regression in production. Production experience with vector databases or hybrid search infrastructure: Pinecone, Weaviate, Qdrant, Milvus, OpenSearch, Elasticsearch, FAISS. Strong Python, code quality matters. Hands-on experience designing evaluation frameworks for ranking systems: NDCG, MRR, MAP, offline-to-online correlation, A/B test interpretation. Has shipped at least one end-to-end ranking, search, or recommendation system to real users at meaningful scale. Strong opinions on retrieval (hybrid vs dense), evaluation (offline vs online), LLM integration (fine-tune vs prompt). Scrappy product-engineering attitude, ships fast, owns the full stack from infra to algorithms to product.",
+
+  "experience_band": { "min_years": 5, "max_years": 9, "soft": true,
+    "note": "Range not a hard requirement; strong candidates outside the band still considered." },
+
+  "ideal_candidate_years_total": [6, 8],
+  "ideal_candidate_years_applied_ai": [4, 5],
+
+  "location": {
+    "work_mode": "hybrid",
+    "preferred_cities": ["Pune", "Noida", "Hyderabad", "Mumbai", "Delhi", "Delhi NCR", "Gurugram", "Gurgaon"],
+    "country_required_unless_strong_signal": "India",
+    "visa_sponsorship": false,
+    "relocation_bonus": true,
+    "note": "Outside-India candidates are case-by-case and de-prioritized since no visa sponsorship; Tier-1 Indian city candidates or those willing to relocate are preferred."
+  },
+
+  "notice_period": {
+    "ideal_max_days": 30,
+    "buyout_possible_up_to_days": 30,
+    "soft_cap_days": 60,
+    "note": "Sub-30 days ideal. 30-60 days acceptable with buyout. 60+ days raises the bar without disqualifying."
+  },
+
+  "must_have_capabilities": [
+    {
+      "id": "embeddings_retrieval_production",
+      "description": "Production experience with embeddings-based retrieval systems deployed to real users (not just experimentation).",
+      "evidence_keywords": ["embeddings", "sentence-transformers", "BGE", "E5", "OpenAI embeddings", "semantic search", "dense retrieval", "vector representations", "text encoders"],
+      "evidence_requires_production_context": true
+    },
+    {
+      "id": "vector_db_hybrid_search",
+      "description": "Production experience with vector databases or hybrid search infrastructure.",
+      "evidence_keywords": ["Pinecone", "Weaviate", "Qdrant", "Milvus", "OpenSearch", "Elasticsearch", "FAISS", "hybrid search", "BM25", "vector database"],
+      "evidence_requires_production_context": true
+    },
+    {
+      "id": "strong_python",
+      "description": "Strong Python and code quality.",
+      "evidence_keywords": [
+        "Python", "scikit-learn", "sklearn", "PyTorch", "TensorFlow", "Keras",
+        "pandas", "NumPy", "Django", "FastAPI", "Flask", "LangChain",
+        "Hugging Face", "HuggingFace", "spaCy", "NLTK", "BentoML",
+        "Jupyter", "Pydantic"
+      ],
+      "evidence_requires_production_context": false
+    },
+    {
+      "id": "eval_frameworks_ranking",
+      "description": "Hands-on experience designing evaluation frameworks for ranking systems (NDCG, MRR, MAP, offline-online correlation, A/B testing).",
+      "evidence_keywords": ["NDCG", "MRR", "MAP", "offline evaluation", "A/B test", "A/B testing", "evaluation framework", "offline-to-online correlation", "experimentation"],
+      "evidence_requires_production_context": false
+    }
+  ],
+
+  "nice_to_have_capabilities": [
+    { "id": "llm_finetuning", "evidence_keywords": ["LoRA", "QLoRA", "PEFT", "fine-tuning LLMs", "Model Adaptation"] },
+    { "id": "learning_to_rank", "evidence_keywords": ["XGBoost", "learning to rank", "LambdaMART", "ranking models", "neural ranking"] },
+    { "id": "hr_tech_marketplace", "evidence_keywords": ["HR tech", "recruiting", "marketplace", "talent platform", "job matching"] },
+    { "id": "distributed_systems_scale", "evidence_keywords": ["distributed systems", "large-scale inference", "Kubernetes", "Kafka", "Spark Streaming"] },
+    { "id": "open_source", "evidence_keywords": ["open-source", "open source contribution", "GitHub", "published"] }
+  ],
+
+  "hard_disqualifiers": [
+    {
+      "id": "pure_research_no_production",
+      "description": "Career entirely in pure research environments (academic labs, research-only roles) with zero production deployment evidence.",
+      "severity": "reject"
+    },
+    {
+      "id": "recent_langchain_only_ai_experience",
+      "description": "All 'AI experience' is under 12 months and consists primarily of LangChain-calling-OpenAI projects, with no substantial pre-LLM-era (pre ~2022) ML/production experience.",
+      "severity": "strong_penalty"
+    },
+    {
+      "id": "stale_coder_architect",
+      "description": "Senior engineer who has not written production code in 18+ months because they moved into pure architecture/tech-lead/management roles.",
+      "severity": "strong_penalty"
+    },
+    {
+      "id": "title_chaser",
+      "description": "Career trajectory shows switching companies roughly every <=1.5 years chasing title bumps (Senior -> Staff -> Principal) with no evidence of depth at any one stop.",
+      "severity": "strong_penalty",
+      "detection": "avg_tenure_months < 18 AND number_of_jobs >= 3 AND titles show seniority escalation"
+    },
+    {
+      "id": "framework_enthusiast_no_systems",
+      "description": "Profile/skills are dominated by trendy AI/ML keyword skills (LangChain, LoRA, GANs, fine-tuning, etc.) with little to no career_history evidence of having built or operated real systems; tutorial/demo-shaped experience.",
+      "severity": "strong_penalty",
+      "detection": "high_keyword_skill_count AND low_production_evidence_in_career_history"
+    },
+    {
+      "id": "consulting_only_no_product",
+      "description": "Entire career at consulting/services firms (TCS, Infosys, Wipro, Accenture, Cognizant, Capgemini, etc.) with no product-company experience. Currently at one of these with PRIOR product-company experience is fine and not penalized.",
+      "severity": "strong_penalty",
+      "consulting_firms": ["TCS", "Tata Consultancy Services", "Infosys", "Wipro", "Accenture", "Cognizant", "Capgemini", "HCL", "Mindtree", "Tech Mahindra", "L&T Infotech", "LTI", "Mphasis", "Genpact", "WNS", "Firstsource", "Concentrix", "IBM Services", "Deloitte", "PwC", "KPMG", "EY Global Delivery", "Hexaware", "Birlasoft"]
+    },
+    {
+      "id": "cv_speech_robotics_no_nlp_ir",
+      "description": "Primary expertise is computer vision, speech, or robotics without significant NLP/information-retrieval exposure.",
+      "severity": "moderate_penalty"
+    },
+    {
+      "id": "closed_source_only_long_tenure_no_validation",
+      "description": "5+ years entirely on closed-source proprietary systems with zero external validation (no papers, talks, open-source, blog, public profile signal).",
+      "severity": "moderate_penalty"
+    }
+  ],
+
+  "explicit_traps_called_out_by_jd": [
+    "Do not just count AI keywords in the skills section - that is an intentional trap.",
+    "A candidate with all the right keywords as skills but an unrelated current title (e.g. Marketing Manager) is not a fit, regardless of skill list completeness.",
+    "A Tier-5-sounding candidate (plain language, no jargon) whose career_history shows they actually built a recommendation/ranking/retrieval system at a product company IS a fit.",
+    "Behavioral signals matter: a perfect-on-paper candidate inactive 6+ months with low recruiter_response_rate is not actually available for hiring purposes and should be down-weighted."
+  ],
+
+  "weights": {
+    "semantic_fit": 0.12,
+    "core_fit": 0.45,
+    "experience_fit": 0.15,
+    "behavioral_fit": 0.15,
+    "location_logistics_fit": 0.13
+  },
+
+  "penalty_caps": {
+    "pure_research_no_production": "score = 0 (hard exclude from top 100)",
+    "consulting_only_no_product": "multiply final_score by 0.35",
+    "title_chaser": "multiply final_score by 0.55",
+    "framework_enthusiast_no_systems": "multiply final_score by 0.45",
+    "recent_langchain_only_ai_experience": "multiply final_score by 0.5",
+    "stale_coder_architect": "multiply final_score by 0.65",
+    "cv_speech_robotics_no_nlp_ir": "multiply final_score by 0.7",
+    "closed_source_only_long_tenure_no_validation": "multiply final_score by 0.85",
+    "honeypot_detected": "score = 0 (hard exclude from top 100)"
+  }
+}

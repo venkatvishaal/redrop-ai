@@ -1,0 +1,70 @@
+team_name: "K-Builders"
+
+primary_contact:
+  name: "Venkatvishaal T S"
+  email: "venkatvishaalts@gmail.com"
+  phone: "+91-8608870926"
+
+
+github_repo: "https://github.com/YOUR_USERNAME/redrop-ai"
+
+sandbox_link: "https://huggingface.co/spaces/YOUR_USERNAME/redrop-ai"
+
+reproduce_command: "python rank.py --candidates ./candidates.jsonl --out ./submission.csv"
+
+compute:
+  platform: "Windows PC"
+  cpu_cores: 8
+  ram_gb: 16
+  python_version: "3.12.4"
+  os: "Windows 11"
+  uses_gpu_for_inference: false
+  has_network_during_ranking: false
+  pre_computation_required: false
+  pre_computation_time_minutes: 0
+
+ai_tools_used:
+  - "Claude"
+
+ai_usage_summary: |
+  Used Claude for architecture design review and code review .
+  No candidate data was fed to any LLM during ranking.
+  All scoring is deterministic and runs offline on CPU.
+
+methodology_summary: |
+  V6 deterministic two-stage multi-signal ranking engine with 5 scoring dimensions.
+  Stage 1: Pool-stable TF-IDF cosine similarity between candidate full-text
+  (headline + summary + career history + education) and JD embedding
+  text (semantic_fit weight: 12%).
+
+  Stage 2: Composite scoring across four additional dimensions:
+  - Core Fit (45%): Trust-weighted skill coverage with career-text
+    corroboration, plain-language matching for Tier-5 candidates,
+    disclaim/hedge detection, and framework-enthusiast flagging.
+  - Experience Fit (15%): Years vs JD band (5-9y), company-type
+    scoring (product > consulting), seniority trajectory, evidence
+    of operational ML work (embedding drift, index refresh, A/B).
+  - Behavioral Fit (15%): Runtime-relative recency, response rate/speed, engagement,
+    open-to-work/application intent, profile completeness, assessments and GitHub activity
+    (profile views, saves, connections), reliability (interview
+    completion, offer acceptance, verification status).
+  - Location Logistics (13%): Preferred cities (Pune, Noida,
+    Hyderabad), India preference, notice period fit.
+  - Education Bonus (additive 0-0.03): Institution tier, field
+    relevance, degree level, grade.
+
+  Anti-gaming: 7 independent detection layers (trust-weighting,
+  career-text corroboration, disclaim patterns, plain-language +
+  anti-disqualify, framework-enthusiast flag, sanity checks,
+  honeypot detection). 24,908 candidates hard-excluded.
+
+  V6 adds an O(1000) evidence-consensus reranker, fairness invariance tests,
+  controlled ablations, recruiter-feedback capture and labeled calibration tooling.
+
+
+declarations:
+  read_submission_spec: true
+  code_is_original_work: true
+  no_collusion: true
+  honeypot_check_done: true
+  reproduction_tested: true

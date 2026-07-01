@@ -1,0 +1,164 @@
+{
+  "default": {
+    "penalty_rules": [
+      {
+        "id": "consulting_only_penalty",
+        "label": "Consulting-only background",
+        "enabled": true,
+        "applies_when": {
+          "all": [
+            { "fact": "experience.consulting_only", "operator": "eq", "value": true },
+            { "fact": "career.role_count", "operator": "gte", "value": 3 }
+          ]
+        },
+        "effect": { "type": "multiplier", "multiplier": 0.85 },
+        "explanation": "Candidate has a consulting-only career pattern."
+      },
+      {
+        "id": "only_research_no_production_penalty",
+        "label": "Research without production",
+        "enabled": true,
+        "applies_when": { "fact": "experience.only_research_no_production", "operator": "eq", "value": true },
+        "effect": { "type": "multiplier", "multiplier": 0.78 },
+        "explanation": "Candidate shows research signal without production delivery evidence."
+      },
+      {
+        "id": "only_langchain_demos_penalty",
+        "label": "Demo-only LLM background",
+        "enabled": true,
+        "applies_when": { "fact": "experience.only_langchain_demos", "operator": "eq", "value": true },
+        "effect": { "type": "multiplier", "multiplier": 0.8 },
+        "explanation": "Candidate appears to have demo-level LangChain exposure without core ML systems depth."
+      },
+      {
+        "id": "inactive_unavailable_penalty",
+        "label": "Inactive and not open to work",
+        "enabled": true,
+        "applies_when": {
+          "all": [
+            { "fact": "behavioral.last_active_days", "operator": "gt", "value": 180 },
+            { "fact": "behavioral.open_to_work", "operator": "eq", "value": false }
+          ]
+        },
+        "effect": { "type": "multiplier", "multiplier": 0.85 },
+        "explanation": "Candidate has low availability signal."
+      },
+      {
+        "id": "low_response_rate_penalty",
+        "label": "Low recruiter response rate",
+        "enabled": true,
+        "applies_when": { "fact": "signals.recruiter_response_rate", "operator": "lt", "value": 0.1 },
+        "effect": { "type": "multiplier", "multiplier": 0.9 },
+        "explanation": "Candidate is unlikely to respond to outreach."
+      },
+      {
+        "id": "pen_frequent_switcher",
+        "label": "Frequent job switcher",
+        "enabled": true,
+        "applies_when": { "fact": "career.frequent_switcher", "operator": "eq", "value": true },
+        "effect": { "type": "multiplier", "multiplier": 0.85 },
+        "explanation": "Candidate exhibits frequent job switching behavior."
+      },
+      {
+        "id": "pen_framework_enthusiast_no_systems",
+        "label": "Framework enthusiast without systems depth",
+        "enabled": true,
+        "applies_when": { "fact": "skills.framework_enthusiast_no_systems", "operator": "eq", "value": true },
+        "effect": { "type": "multiplier", "multiplier": 0.82 },
+        "explanation": "Candidate lists many frameworks without systems engineering evidence."
+      }
+    ],
+    "score_caps": [
+      {
+        "id": "core_skill_below_floor_cap",
+        "label": "Very low core skill match",
+        "enabled": true,
+        "applies_when": { "fact": "skills.core_skill_match_score", "operator": "lt", "value": 0.25 },
+        "effect": { "type": "cap", "max_score": 0.5 },
+        "explanation": "Candidate lacks minimum core skill coverage."
+      },
+      {
+        "id": "weak_core_fit_and_evidence_cap",
+        "label": "Weak core fit and evidence",
+        "enabled": true,
+        "applies_when": {
+          "all": [
+            { "fact": "skills.core_skill_match_score", "operator": "lt", "value": 0.4 },
+            { "fact": "evidence.composite", "operator": "lt", "value": 0.65 }
+          ]
+        },
+        "effect": { "type": "cap", "max_score": 0.6 },
+        "explanation": "Candidate has both weak skill fit and weak supporting evidence."
+      },
+      {
+        "id": "missing_python_evidence_cap",
+        "label": "Missing implementation evidence",
+        "enabled": true,
+        "applies_when": { "fact": "evidence.has_python_evidence", "operator": "eq", "value": false },
+        "effect": { "type": "cap", "max_score": 0.65 },
+        "explanation": "Candidate lacks Python or implementation evidence."
+      },
+      {
+        "id": "missing_production_or_retrieval_cap",
+        "label": "Missing production or retrieval evidence",
+        "enabled": true,
+        "applies_when": {
+          "not": {
+            "all": [
+              { "fact": "evidence.has_production_evidence", "operator": "eq", "value": true },
+              { "fact": "evidence.has_retrieval_evidence", "operator": "eq", "value": true }
+            ]
+          }
+        },
+        "effect": { "type": "cap", "max_score": 0.68 },
+        "explanation": "The JD requires shipped production ML and retrieval/vector evidence."
+      },
+      {
+        "id": "consulting_without_production_cap",
+        "label": "Consulting without production AI evidence",
+        "enabled": true,
+        "applies_when": {
+          "all": [
+            { "fact": "experience.consulting_only", "operator": "eq", "value": true },
+            { "fact": "evidence.has_production_evidence", "operator": "eq", "value": false }
+          ]
+        },
+        "effect": { "type": "cap", "max_score": 0.62 },
+        "explanation": "Consulting-only background without production evidence is capped."
+      },
+      {
+        "id": "inactive_unavailable_cap",
+        "label": "Inactive and unavailable score cap",
+        "enabled": true,
+        "applies_when": {
+          "all": [
+            { "fact": "behavioral.last_active_days", "operator": "gt", "value": 180 },
+            { "fact": "behavioral.open_to_work", "operator": "eq", "value": false }
+          ]
+        },
+        "effect": { "type": "cap", "max_score": 0.7 },
+        "explanation": "Availability risk prevents top ranking."
+      },
+      {
+        "id": "cap_no_nlp_experience",
+        "label": "Only CV/Speech/Robotics, no NLP",
+        "enabled": true,
+        "applies_when": { "fact": "skills.only_cv_speech_robotics_no_nlp", "operator": "eq", "value": true },
+        "effect": { "type": "cap", "max_score": 0.4 },
+        "explanation": "Candidate only has CV, speech, or robotics experience without NLP/search depth."
+      },
+      {
+        "id": "cap_only_closed_source",
+        "label": "Only closed source for 5+ years",
+        "enabled": true,
+        "applies_when": { "fact": "experience.only_closed_source_5years", "operator": "eq", "value": true },
+        "effect": { "type": "cap", "max_score": 0.5 },
+        "explanation": "Candidate has only worked on closed-source proprietary systems for over 5 years."
+      }
+    ]
+  },
+  "lenient": {
+    "penalty_rules": [],
+    "score_caps": []
+  }
+}
