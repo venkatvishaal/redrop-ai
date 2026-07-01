@@ -12,7 +12,7 @@
 - Code quality: evaluate.py and feedback.py rewritten for readability
 - Fairness: tier/grade have zero weight; verified by counterfactual test
 
-## What system cannot claim (honest limits)
+## What system cannot claim:
 
 - **Accuracy**: Unvalidated without recruiter-provided relevance labels
 - **Cross-job calibration**: Each JD produces a different profile; weights may need re-calibration per job
