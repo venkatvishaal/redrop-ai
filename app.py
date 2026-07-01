@@ -1,64 +1,56 @@
-import gradio as gr
 import subprocess
 import pandas as pd
 import os
 
-# -- Monkeypatch for Gradio API Schema Bug --
-import gradio_client.utils
-_original_get_type = gradio_client.utils.get_type
-def safe_get_type(schema):
+# Monkeypatch BEFORE importing gradio so the fix is in place at load time
+import gradio_client.utils as _gcu
+_orig = _gcu.get_type
+def _safe_get_type(schema):
     if isinstance(schema, bool):
         return "Any"
-    return _original_get_type(schema)
-gradio_client.utils.get_type = safe_get_type
-# -------------------------------------------
+    return _orig(schema)
+_gcu.get_type = _safe_get_type
+
+import gradio as gr
 
 
 def run_ranking():
     try:
-        # Run the rank.py script via subprocess
         result = subprocess.run(
             ["python", "rank.py", "--candidates", "data/jobs.json", "--out", "submission.csv"],
             capture_output=True,
             text=True,
-            check=True
+            timeout=300
         )
-        
-        # Load and display the CSV if successful
+        logs = result.stdout + ("\n" + result.stderr if result.stderr else "")
+
         if os.path.exists("submission.csv"):
             df = pd.read_csv("submission.csv")
-            return "Ranking completed successfully!\n\n" + result.stdout, df, "submission.csv"
+            preview = df.head(20).to_string(index=False)
+            return f"✅ Ranking completed!\n\n{logs}\n\nTop 20 results preview:\n{preview}"
         else:
-            return "Error: submission.csv was not generated.\n\n" + result.stdout, None, None
-            
-    except subprocess.CalledProcessError as e:
-        return f"An error occurred while running the ranking system:\n\n{e.stderr}", None, None
+            return f"❌ submission.csv was not produced.\n\n{logs}"
 
-# Build the Gradio Interface
+    except subprocess.TimeoutExpired:
+        return "❌ Timed out after 5 minutes."
+    except Exception as e:
+        return f"❌ Error: {e}"
+
+
 with gr.Blocks(title="Redrop AI Sandbox") as demo:
-    gr.Markdown("# Redrop AI - Candidate Ranking Sandbox")
-    gr.Markdown("""
-    This is a live sandbox environment for the Redrop AI V6 candidate ranking system. 
-    Click the button below to run the deterministic ranking pipeline on the pre-loaded sample candidates.
-    """)
-    
-    run_btn = gr.Button("Run Ranking System", variant="primary")
-    
-    with gr.Row():
-        logs_output = gr.Textbox(label="Execution Logs", lines=10)
-        
-    with gr.Row():
-        table_output = gr.Dataframe(label="Ranked Candidates (submission.csv)")
-        
-    with gr.Row():
-        file_output = gr.File(label="Download submission.csv")
-        
-    # Wire the button to the function
-    run_btn.click(
-        fn=run_ranking, 
-        inputs=[], 
-        outputs=[logs_output, table_output, file_output]
+    gr.Markdown("# 🚀 Redrop AI — Candidate Ranking Sandbox")
+    gr.Markdown(
+        "Live sandbox for the **Redrop AI V6** deterministic ranking pipeline. "
+        "Click the button to run end-to-end ranking on the pre-loaded sample candidates "
+        "and download the ranked CSV."
     )
 
-if __name__ == "__main__":
-    demo.launch()
+    run_btn = gr.Button("▶ Run Ranking System", variant="primary", size="lg")
+    output_box = gr.Textbox(label="Output / Logs", lines=20, interactive=False)
+    run_btn.click(fn=run_ranking, inputs=[], outputs=[output_box])
+
+    gr.Markdown("---")
+    gr.Markdown("📄 After running, download `submission.csv` directly from the **Files** tab above.")
+
+
+demo.launch()
