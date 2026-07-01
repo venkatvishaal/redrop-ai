@@ -8,7 +8,7 @@ primary_contact:
 
 github_repo: "https://github.com/venkatvishaal/redrop-ai"
 
-sandbox_link: "https://huggingface.co/spaces/YOUR_USERNAME/redrop-ai"
+sandbox_link: "https://huggingface.co/spaces/Venkatvishaal/redrop-ai"
 
 reproduce_command: "python rank.py --candidates ./candidates.jsonl --out ./submission.csv"
 
