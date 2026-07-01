@@ -1,3 +1,14 @@
+---
+title: Redrop AI Sandbox
+emoji: 🚀
+colorFrom: blue
+colorTo: indigo
+sdk: gradio
+sdk_version: 4.36.1
+app_file: app.py
+pinned: false
+---
+
 # DropNuilAI — Intelligent Candidate Ranking System
 
 An offline, deterministic two-stage candidate ranking engine featuring multi-layer semantic understanding, robust anti-gaming defenses, and data-driven weight calibration. 
