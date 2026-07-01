@@ -3,6 +3,17 @@ import subprocess
 import pandas as pd
 import os
 
+# -- Monkeypatch for Gradio API Schema Bug --
+import gradio_client.utils
+_original_get_type = gradio_client.utils.get_type
+def safe_get_type(schema):
+    if isinstance(schema, bool):
+        return "Any"
+    return _original_get_type(schema)
+gradio_client.utils.get_type = safe_get_type
+# -------------------------------------------
+
+
 def run_ranking():
     try:
         # Run the rank.py script via subprocess
