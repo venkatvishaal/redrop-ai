@@ -169,11 +169,14 @@ def iter_candidates_raw(path: str):
     """Yields raw dict records from a .jsonl or .jsonl.gz file."""
     opener = gzip.open if path.endswith(".gz") else open
     with opener(path, "rt", encoding="utf-8") as f:
-        for line in f:
+        for lineno, line in enumerate(f, 1):
             line = line.strip()
             if not line:
                 continue
-            yield json.loads(line)
+            try:
+                yield json.loads(line)
+            except json.JSONDecodeError as e:
+                print(f"[candidate_loader] Skipping malformed JSON on line {lineno}: {e}", flush=True)
 
 
 def load_candidates(path: str) -> List[Candidate]:
