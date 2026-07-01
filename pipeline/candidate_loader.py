@@ -176,7 +176,7 @@ def iter_candidates_raw(path: str):
             try:
                 yield json.loads(line)
             except json.JSONDecodeError as e:
-                print(f"[candidate_loader] Skipping malformed JSON on line {lineno}: {e}", flush=True)
+                print(f"[candidate_loader] Skipping malformed JSON line: {e}", flush=True)
 
 
 def load_candidates(path: str) -> List[Candidate]:
