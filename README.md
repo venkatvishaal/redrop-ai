@@ -1,4 +1,4 @@
-# Redrop AI — Intelligent Candidate Ranking System
+# DropNuilAI — Intelligent Candidate Ranking System
 
 An offline, deterministic two-stage candidate ranking engine featuring multi-layer semantic understanding, robust anti-gaming defenses, and data-driven weight calibration. 
 
