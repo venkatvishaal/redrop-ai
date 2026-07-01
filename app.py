@@ -1,49 +1,53 @@
-import streamlit as st
+import gradio as gr
 import subprocess
 import pandas as pd
 import os
 
-st.title("Redrop AI - Candidate Ranking Sandbox")
-
-st.markdown("""
-This is a live sandbox environment for the Redrop AI V6 candidate ranking system. 
-Click the button below to run the deterministic ranking pipeline on the pre-loaded sample candidates.
-""")
-
-if st.button("Run Ranking System"):
-    with st.spinner("Running ranking pipeline... This may take a few seconds."):
+def run_ranking():
+    try:
         # Run the rank.py script via subprocess
-        try:
-            result = subprocess.run(
-                ["python", "rank.py", "--candidates", "data/jobs.json", "--out", "submission.csv"],
-                capture_output=True,
-                text=True,
-                check=True
-            )
+        result = subprocess.run(
+            ["python", "rank.py", "--candidates", "data/jobs.json", "--out", "submission.csv"],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        
+        # Load and display the CSV if successful
+        if os.path.exists("submission.csv"):
+            df = pd.read_csv("submission.csv")
+            return "Ranking completed successfully!\n\n" + result.stdout, df, "submission.csv"
+        else:
+            return "Error: submission.csv was not generated.\n\n" + result.stdout, None, None
             
-            st.success("Ranking completed successfully!")
-            
-            # Show the output of the script if needed
-            with st.expander("View Execution Logs"):
-                st.code(result.stdout)
-                
-            # Load and display the CSV
-            if os.path.exists("submission.csv"):
-                df = pd.read_csv("submission.csv")
-                st.subheader("Ranked Candidates (submission.csv)")
-                st.dataframe(df)
-                
-                # Provide a download button
-                with open("submission.csv", "rb") as file:
-                    st.download_button(
-                        label="Download submission.csv",
-                        data=file,
-                        file_name="submission.csv",
-                        mime="text/csv"
-                    )
-            else:
-                st.error("submission.csv was not generated.")
-                
-        except subprocess.CalledProcessError as e:
-            st.error("An error occurred while running the ranking system.")
-            st.code(e.stderr)
+    except subprocess.CalledProcessError as e:
+        return f"An error occurred while running the ranking system:\n\n{e.stderr}", None, None
+
+# Build the Gradio Interface
+with gr.Blocks(title="Redrop AI Sandbox") as demo:
+    gr.Markdown("# Redrop AI - Candidate Ranking Sandbox")
+    gr.Markdown("""
+    This is a live sandbox environment for the Redrop AI V6 candidate ranking system. 
+    Click the button below to run the deterministic ranking pipeline on the pre-loaded sample candidates.
+    """)
+    
+    run_btn = gr.Button("Run Ranking System", variant="primary")
+    
+    with gr.Row():
+        logs_output = gr.Textbox(label="Execution Logs", lines=10)
+        
+    with gr.Row():
+        table_output = gr.Dataframe(label="Ranked Candidates (submission.csv)")
+        
+    with gr.Row():
+        file_output = gr.File(label="Download submission.csv")
+        
+    # Wire the button to the function
+    run_btn.click(
+        fn=run_ranking, 
+        inputs=[], 
+        outputs=[logs_output, table_output, file_output]
+    )
+
+if __name__ == "__main__":
+    demo.launch()
