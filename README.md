@@ -82,3 +82,6 @@ python rank.py --candidates candidates.jsonl --out submission.csv \
 *   **Meritocratic Evaluation:** Sensitive demographic attributes are entirely excluded from the evaluation pipeline. 
 *   **Education Scaling:** Educational degrees serve strictly as a minor tiebreaker (capped at 0.03 maximum weight).
 *   **Anti-Gaming:** The system actively neutralizes "impossible profiles" and keyword-stuffing via its honeypot detectors and sanity checks.
+
+Note:
+The outputs from the Hugging-Face rankers are just ranking from a sample 500 candidates and not of the full 100,000 candidates from candidates.jsonl file.
